@@ -18,4 +18,7 @@ export class AppComponent {
     {source:'pippo', target:'process', label:'to Process'},
     { source: 'process', target: 'end', label: 'to End' }
   ];
+
+  
 }
+
