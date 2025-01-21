@@ -3,8 +3,17 @@ import { Component } from '@angular/core';
 @Component({
   selector: 'app-root',
   templateUrl: './app.component.html',
-  styleUrl: './app.component.css'
+  styleUrls: ['./app.component.css']
 })
 export class AppComponent {
-  title = 'try-ngx-graph';
+  nodes = [
+    { id: 'start', label: 'Start' },
+    { id: 'process', label: 'Process' },
+    { id: 'end', label: 'End' }
+  ];
+
+  links = [
+    { source: 'start', target: 'process', label: 'to Process' },
+    { source: 'process', target: 'end', label: 'to End' }
+  ];
 }
