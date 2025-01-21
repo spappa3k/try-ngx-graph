@@ -6,19 +6,17 @@ import { Component } from '@angular/core';
   styleUrls: ['./app.component.css']
 })
 export class AppComponent {
-  nodes = [
-    { id: 'start', label: 'Start' },
-    { id: 'process', label: 'Process' },
-    {id : 'pippo', label:'Pippo'},
-    { id: 'end', label: 'End' }
+
+  nodeData = [
+    { id: 'first', label: 'Pippo' },
+    { id: 'second', label: 'Node 2' },
+    { id: 'third', label: 'Node 3' }
   ];
 
-  links = [
-    { source: 'start', target: 'process', label: 'to Pippo' },
-    {source:'pippo', target:'process', label:'to Process'},
-    { source: 'process', target: 'end', label: 'to End' }
-  ];
-
-  
+  // Metodo per gestire il click sui nodi
+  onNodeClick(node: any) {
+    console.log('Nodo cliccato:', node.label);
+    alert(`Nodo cliccato: ${node.label}`);
+  }
 }
 
