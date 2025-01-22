@@ -5,3 +5,28 @@
 .closeWork{
     position: absolute; top: 10px; right: 10px;
 }
+
+.buttonAdd{
+width: 80%;
+font-size: 1.5em;
+border: none;
+background-color: rgba(240, 248, 255, 0.674);
+transition: background-color 0.3s ease, transform 0.2s ease;
+}
+
+.buttonAdd:hover{
+    background-color: rgb(138, 188, 231);
+    transform: scale(1.05);
+}
+
+.buttonsSide{
+    width: 60px;
+    border: none;
+    background-color: rgba(240, 248, 255, 0.993);
+    transition: background-color 0.3s ease, transform 0.2s ease;
+    }
+    
+    .buttonsSide:hover{
+        background-color: rgb(95, 168, 231);
+        transform: scale(1.05);
+    }
