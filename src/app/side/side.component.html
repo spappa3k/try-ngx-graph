@@ -1,6 +1,6 @@
 <!-- Card -->
-<div class="card" *ngFor="let work of works">
-    <button type="button" class="btn-close text-danger closeWork" aria-label="Close"></button>
+<div class="card" *ngFor="let work of works let i=index" >
+    <button type="button" class="btn-close text-danger closeWork" aria-label="Close" (click)="delete(i)"></button>
     <div class="card-body">
       <h5 class="card-title">{{ work.name }}</h5>
       <p class="card-text">{{ work.description }}</p>
@@ -41,7 +41,7 @@
             <div id="nodesContainer">
               <div *ngFor="let node of tempWork.nodes; let i = index" class="mb-3">
                 <label [for]="'node' + i" class="form-label">Nodo {{ i + 1 }}</label>
-                <input type="text" class="form-control" [(ngModel)]="tempWork.nodes[i]" [name]="'node' + i" required>
+                <input type="text" class="form-control" [name]="'node' + i" required>
               </div>
             </div>
             <button type="button" class="btn btn-secondary mb-3" (click)="addNode()">Aggiungi Nodo</button>

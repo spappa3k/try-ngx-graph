@@ -51,4 +51,8 @@ export class SideComponent {
     // Chiudi il modale
     this.closeModal();
   }
+
+  delete(i:number){
+    this.works.splice(i, 1);
+  }
 }
