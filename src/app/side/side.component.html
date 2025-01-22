@@ -1,5 +1,5 @@
+<!-- Card -->
 <div class="card">
-    <!-- Icona di chiusura -->
     <button type="button" class="btn-close text-danger closeWork" aria-label="Close"></button>
   
     <div class="card-body">
@@ -12,7 +12,47 @@
       </div>
     </div>
   </div>
-
+  
+  <!-- Pulsante "+" -->
   <div class="d-flex mt-2 justify-content-center align-items-center">
-    <button type="button" class="buttonAdd">+</button>
+    <button type="button" class="buttonAdd" (click)="openModal()">+</button>
   </div>
+  
+  <!-- Modale -->
+  <div class="modal fade" [ngClass]="{'show d-block': isModalOpen}" tabindex="-1" role="dialog">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title">Aggiungi Lavoro</h5>
+          <button type="button" class="btn-close" (click)="closeModal()" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+          <form (ngSubmit)="saveWork()">
+            <!-- Nome -->
+            <div class="mb-3">
+              <label for="workName" class="form-label">Nome</label>
+              <input type="text" class="form-control" id="workName" [(ngModel)]="work.name" name="name" required>
+            </div>
+            <!-- Descrizione -->
+            <div class="mb-3">
+              <label for="workDescription" class="form-label">Descrizione</label>
+              <textarea class="form-control" id="workDescription" rows="3" [(ngModel)]="work.description" name="description" required></textarea>
+            </div>
+            <!-- Nodi -->
+            <div id="nodesContainer">
+              <div *ngFor="let node of work.nodes; let i = index" class="mb-3">
+                <label [for]="'node' + i" class="form-label">Nodo {{ i + 1 }}</label>
+                <input type="text" class="form-control" [(ngModel)]="work.nodes[i]" [name]="'node' + i" required>
+              </div>
+            </div>
+            <button type="button" class="btn btn-secondary mb-3" (click)="addNode()">Aggiungi Nodo</button>
+          </form>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" (click)="closeModal()">Chiudi</button>
+          <button type="submit" class="btn btn-primary" (click)="saveWork()">Salva</button>
+        </div>
+      </div>
+    </div>
+  </div>
+  

@@ -7,6 +7,8 @@ import { NgxGraphModule } from '@swimlane/ngx-graph'
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { GraphsComponent } from './graphs/graphs.component';
 import { SideComponent } from './side/side.component';
+import { FormsModule } from '@angular/forms'; 
+
 
 @NgModule({
   declarations: [
@@ -18,7 +20,8 @@ import { SideComponent } from './side/side.component';
     BrowserModule,
     AppRoutingModule,
     NgxGraphModule,
-    BrowserAnimationsModule
+    BrowserAnimationsModule,
+    FormsModule
   ],
   providers: [],
   bootstrap: [AppComponent]
