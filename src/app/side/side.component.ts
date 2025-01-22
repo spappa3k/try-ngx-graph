@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+import { Work } from '../../models/models';
 
 @Component({
   selector: 'app-side',
@@ -6,16 +7,24 @@ import { Component } from '@angular/core';
   styleUrl: './side.component.css'
 })
 export class SideComponent {
+  counterWorks = 0;
   isModalOpen = false; // Stato del modale
-  work = {
+
+  // Lavori esistenti
+  works: Work[] = [];
+
+  // Oggetto temporaneo per raccogliere i dati del modulo
+  tempWork: Work = {
     name: '',
     description: '',
-    nodes: [''] // Lista di nodi (inizialmente 1)
+    nodes: ['']
   };
 
   // Apri il modale
   openModal() {
     this.isModalOpen = true;
+    // Resetta il form
+    this.tempWork = { name: '', description: '', nodes: [''] };
   }
 
   // Chiudi il modale
@@ -25,16 +34,21 @@ export class SideComponent {
 
   // Aggiungi un nuovo nodo
   addNode() {
-    if (this.work.nodes.length < 10) {
-      this.work.nodes.push('');
+    if (this.tempWork.nodes.length < 8) {
+      this.tempWork.nodes.push('');
     } else {
-      alert('Puoi aggiungere al massimo 10 nodi.');
+      alert('Puoi aggiungere al massimo 8 nodi.');
     }
   }
 
   // Salva il lavoro
   saveWork() {
-    console.log('Lavoro salvato:', this.work);
+    // Aggiungi il nuovo lavoro all'array works
+    this.works.push({ ...this.tempWork });
+
+    console.log('Lavoro salvato:', this.works);
+
+    // Chiudi il modale
     this.closeModal();
   }
 }
