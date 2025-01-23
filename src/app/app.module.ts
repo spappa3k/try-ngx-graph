@@ -8,6 +8,7 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { GraphsComponent } from './graphs/graphs.component';
 import { SideComponent } from './side/side.component';
 import { FormsModule } from '@angular/forms'; 
+import { ReactiveFormsModule } from '@angular/forms';
 
 
 @NgModule({
@@ -21,7 +22,8 @@ import { FormsModule } from '@angular/forms';
     AppRoutingModule,
     NgxGraphModule,
     BrowserAnimationsModule,
-    FormsModule
+    FormsModule,
+    ReactiveFormsModule
   ],
   providers: [],
   bootstrap: [AppComponent]

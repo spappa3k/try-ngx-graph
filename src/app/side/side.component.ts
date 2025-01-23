@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
 import { Work } from '../../models/models';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 
 @Component({
   selector: 'app-side',
@@ -19,6 +20,20 @@ export class SideComponent {
     description: '',
     nodes: ['']
   };
+
+workForm?:FormGroup;
+
+constructor(private fb:FormBuilder){
+
+  this.workForm=this.fb.group({
+    name: ['', Validators.required], 
+    description: ['', Validators.required],
+    nodes: ['',Validators.required]
+  })
+}
+
+
+
 
   // Apri il modale
   openModal() {
@@ -51,7 +66,7 @@ export class SideComponent {
     // Chiudi il modale
     this.closeModal();
   }
-
+// Elimina work
   delete(i:number){
     this.works.splice(i, 1);
   }
