@@ -26,22 +26,27 @@
         <button type="button" class="btn-close" (click)="closeModal()" aria-label="Close"></button>
       </div>
       <div class="modal-body">
-        <form (ngSubmit)="saveWork()">
           <!-- Nome -->
+          <form (ngSubmit)="saveWork()" #workForm="ngForm">
           <div class="mb-3">
             <label for="workName" class="form-label">Nome</label>
-            <input type="text" class="form-control" id="workName" [(ngModel)]="tempWork.name" name="name" required>
+            <input type="text" class="form-control" id="workName" [(ngModel)]="tempWork.name" name="name" required #workName="ngModel" required minlength="3">
+            <p *ngIf="workName.invalid && workName.touched || workName.errors?.['minlength']" class="text-danger">Il nome è obbligatorio - min 3 char.</p>
           </div>
           <!-- Descrizione -->
           <div class="mb-3">
             <label for="workDescription" class="form-label">Descrizione</label>
-            <textarea class="form-control" id="workDescription" rows="3" [(ngModel)]="tempWork.description" name="description" required></textarea>
+            <textarea class="form-control" id="workDescription" rows="3" [(ngModel)]="tempWork.description" name="description" required maxlength="200"></textarea>
           </div>
           <!-- Nodi -->
           <div id="nodesContainer">
             <div *ngFor="let node of tempWork.nodes; let i = index" class="mb-3">
               <label [for]="'node' + i" class="form-label">Nodo {{ i + 1 }}</label>
-              <input type="text" class="form-control" [name]="'node' + i" required>
+              <input type="text" class="form-control" [name]="'node' + i" required maxlength="20" minlength="2" [(ngModel)]="tempWork.nodes[i]" #nodeModel="ngModel">
+              <p *ngIf="nodeModel.touched && nodeModel.invalid" class="text-danger">
+                Il nodo deve contenere almeno 2 caratteri.
+              </p>
+            
             </div>
           </div>
           <button type="button" class="btn btn-secondary mb-3" (click)="addNode()">Aggiungi Nodo</button>
@@ -49,7 +54,7 @@
       </div>
       <div class="modal-footer">
         <button type="button" class="btn btn-secondary" (click)="closeModal()">Chiudi</button>
-        <button type="submit" class="btn btn-primary" (click)="saveWork()">Salva</button>
+        <button *ngIf="!workForm.invalid" type="submit" class="btn btn-primary" (click)="saveWork()">Salva</button>
       </div>
     </div>
   </div>

@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
 import { Work } from '../../models/models';
+import { NgForm } from '@angular/forms';
 
 @Component({
   selector: 'app-side',
@@ -9,6 +10,7 @@ import { Work } from '../../models/models';
 export class SideComponent {
   counterWorks = 0;
   isModalOpen = false; // Stato del modale
+  workForm?: NgForm;
 
   // Lavori esistenti
   works: Work[] = [];
@@ -30,6 +32,7 @@ export class SideComponent {
   // Chiudi il modale
   closeModal() {
     this.isModalOpen = false;
+    this.workForm!.resetForm();
   }
 
   // Aggiungi un nuovo nodo
@@ -55,4 +58,5 @@ export class SideComponent {
   delete(i:number){
     this.works.splice(i, 1);
   }
+
 }
