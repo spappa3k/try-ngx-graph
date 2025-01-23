@@ -1,6 +1,5 @@
 import { Component } from '@angular/core';
 import { Work } from '../../models/models';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 
 @Component({
   selector: 'app-side',
@@ -8,9 +7,6 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
   styleUrl: './side.component.css'
 })
 export class SideComponent {
-  nameRegex: RegExp = /^[a-zA-Z\s'-]{3,}$/;
-
-
   counterWorks = 0;
   isModalOpen = false; // Stato del modale
 
@@ -23,20 +19,6 @@ export class SideComponent {
     description: '',
     nodes: ['']
   };
-
-workForm?:FormGroup;
-
-constructor(private fb:FormBuilder){
-
-  this.workForm=this.fb.group({
-    workName: ['', [Validators.required, Validators.pattern(this.nameRegex)]], 
-    workDescription: ['', Validators.required],
-    workNodes: ['',Validators.required]
-  })
-}
-
-
-
 
   // Apri il modale
   openModal() {
@@ -69,7 +51,7 @@ constructor(private fb:FormBuilder){
     // Chiudi il modale
     this.closeModal();
   }
-// Elimina work
+
   delete(i:number){
     this.works.splice(i, 1);
   }
