@@ -8,6 +8,9 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
   styleUrl: './side.component.css'
 })
 export class SideComponent {
+  nameRegex: RegExp = /^[a-zA-Z\s'-]{3,}$/;
+
+
   counterWorks = 0;
   isModalOpen = false; // Stato del modale
 
@@ -26,9 +29,9 @@ workForm?:FormGroup;
 constructor(private fb:FormBuilder){
 
   this.workForm=this.fb.group({
-    name: ['', Validators.required], 
-    description: ['', Validators.required],
-    nodes: ['',Validators.required]
+    workName: ['', [Validators.required, Validators.pattern(this.nameRegex)]], 
+    workDescription: ['', Validators.required],
+    workNodes: ['',Validators.required]
   })
 }
 

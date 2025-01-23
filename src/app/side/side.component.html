@@ -18,6 +18,7 @@
   </div>
   
   <!-- Modale -->
+  
   <div class="modal fade" [ngClass]="{ 'show d-block': isModalOpen }" tabindex="-1" role="dialog">
     <div class="modal-dialog" role="document">
       <div class="modal-content">
@@ -26,17 +27,19 @@
           <button type="button" class="btn-close" (click)="closeModal()" aria-label="Close"></button>
         </div>
         <div class="modal-body">
-          <form (ngSubmit)="saveWork()">
+          <form [formGroup]="workForm!" (ngSubmit)="saveWork()">
             <!-- Nome -->
             <div class="mb-3">
               <label for="workName" class="form-label">Nome</label>
-              <input type="text" class="form-control" id="workName" [(ngModel)]="tempWork.name" name="name" required>
+              <input type="text" class="form-control" id="workName" name="workName" formControlName="workName" maxlength="20">
+              <p *ngIf="workForm!.get('workName')?.invalid&&workForm!.get('workName')?.touched" class="text-danger">Error</p>
             </div>
             <!-- Descrizione -->
             <div class="mb-3">
               <label for="workDescription" class="form-label">Descrizione</label>
-              <textarea class="form-control" id="workDescription" rows="3" [(ngModel)]="tempWork.description" name="description" required></textarea>
+              <textarea class="form-control" id="workDescription" rows="3" name="workDescription" formControlName="workDescription" maxlength="200"></textarea>
             </div>
+
             <!-- Nodi -->
             <div id="nodesContainer">
               <div *ngFor="let node of tempWork.nodes; let i = index" class="mb-3">
@@ -54,4 +57,5 @@
       </div>
     </div>
   </div>
+
   

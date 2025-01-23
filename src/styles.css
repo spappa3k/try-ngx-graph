@@ -30,3 +30,8 @@ transition: background-color 0.3s ease, transform 0.2s ease;
         background-color: rgb(95, 168, 231);
         transform: scale(1.05);
     }
+
+    .text-danger{
+        font-size: 0.8em;
+        margin-top: 8px;
+    }
