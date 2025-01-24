@@ -11,7 +11,7 @@ export class SideComponent {
   counterWorks = 0;
   isModalOpen = false; // Stato del modale
   isModalOpenEdit = false;
-
+  indexToEdit?:number
   // Lavori esistenti
   works: Work[] = [];
 
@@ -54,8 +54,8 @@ export class SideComponent {
 
   // Apri il modale per modificare un lavoro
   openModalEdit(index: number) {
+    this.indexToEdit=index; // usato poi per salvare dopo
     this.isModalOpenEdit = true;
-
     const workToEdit = this.works[index];
     this.workForm.patchValue({
       name: workToEdit.name,
@@ -106,6 +106,17 @@ export class SideComponent {
     // Chiudi il modale
     this.closeModal();
   }
+
+    // Salva il lavoro editato
+    saveWorkEdited() {
+      const work: Work = {
+        name: this.workForm.value.name,
+        description: this.workForm.value.description,
+        nodes: this.workForm.value.nodes.map((node: any) => node.value)
+      };
+      this.works[this.indexToEdit!] = work;
+      this.closeModal();
+    }
 
   // Elimina un lavoro
   delete(i: number) {

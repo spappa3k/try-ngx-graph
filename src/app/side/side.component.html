@@ -18,12 +18,12 @@
 </div>
 
 <!-- Modale -->
-<div class="modal fade" [ngClass]="{ 'show d-block': isModalOpen || isModalOpenEdit }" tabindex="-1" role="dialog">
+<div class="modal fade" [ngClass]="{ 'show d-block': isModalOpen }" tabindex="-1" role="dialog">
   <div class="modal-dialog" role="document">
     <div class="modal-content">
       <div class="modal-header">
-        <h5 class="modal-title">{{ isModalOpen ? 'Aggiungi Lavoro' : 'Modifica Lavoro' }}</h5>
-        <button type="button" class="btn-close" (click)="isModalOpen ? closeModal() : closeModalEdit()" aria-label="Close"></button>
+        <h5 class="modal-title">Aggiungi Lavoro</h5>
+        <button type="button" class="btn-close" (click)="closeModal()" aria-label="Close"></button>
       </div>
       <div class="modal-body">
         <!-- Nome -->
@@ -66,15 +66,64 @@
         </form>
       </div>
       <div class="modal-footer">
-        <button type="button" class="btn btn-secondary" (click)="isModalOpen ? closeModal() : closeModalEdit()">Chiudi</button>
-        <button
-          type="submit"
-          class="btn btn-primary"
-          [disabled]="workForm.invalid"
-          (click)="saveWork()"
-        >
-          Salva
-        </button>
+        <button type="button" class="btn btn-secondary" (click)="closeModal()">Chiudi</button>
+        <button type="submit" class="btn btn-primary" [disabled]="workForm.invalid" (click)="saveWork()">Salva</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Modale Edita -->
+<div class="modal fade" [ngClass]="{ 'show d-block': isModalOpenEdit }" tabindex="-1" role="dialog">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title">Modifica Lavoro</h5>
+        <button type="button" class="btn-close" (click)="closeModalEdit()" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        <!-- Nome -->
+        <form [formGroup]="workForm" (ngSubmit)="saveWork()">
+          <div class="mb-3">
+            <label for="workName" class="form-label">Nome</label>
+            <input
+              type="text"
+              class="form-control"
+              id="workName"
+              formControlName="name"
+              required
+            />
+            <p *ngIf="workForm.get('name')?.invalid && workForm.get('name')?.touched" class="text-danger">
+              Il nome è obbligatorio - min 3 char.
+            </p>
+          </div>
+          <!-- Descrizione -->
+          <div class="mb-3">
+            <label for="workDescription" class="form-label">Descrizione</label>
+            <textarea
+              class="form-control"
+              id="workDescription"
+              rows="3"
+              formControlName="description"
+              required
+            ></textarea>
+          </div>
+          <!-- Nodi -->
+          <div id="nodesContainer">
+            <div *ngFor="let node of nodes.controls; let i = index" [formGroup]="getNodeAt(i)" class="mb-3">
+              <label [for]="'node' + i" class="form-label">Nodo {{ i + 1 }}</label>
+              <input type="text" class="form-control" [id]="'node' + i" formControlName="value" required />
+              <p *ngIf="getNodeAt(i).get('value')?.touched && getNodeAt(i).get('value')?.invalid" class="text-danger">
+                Il nodo deve contenere almeno 2 caratteri.
+              </p>
+            </div>
+          </div>
+          <button type="button" class="btn btn-secondary mb-3" (click)="addNode()">Aggiungi Nodo</button>
+        </form>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" (click)="closeModalEdit()">Chiudi</button>
+        <button type="submit" class="btn btn-primary" [disabled]="workForm.invalid" (click)="saveWorkEdited()">Salva</button>
       </div>
     </div>
   </div>
