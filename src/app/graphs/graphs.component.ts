@@ -15,12 +15,6 @@ export class GraphsComponent implements OnInit{
   nodeData: any[] = [];
   linkData: any[]=  [];  
 
-  // Metodo per gestire il click sui nodi
-  onNodeClick(node: any) {
-    console.log('Nodo cliccato:', node.label);
-    alert(`Nodo cliccato: ${node.label}`);
-  }
-
 
   ngOnInit(): void {
     this.workReceived = this.gr.$workToShow;
@@ -53,7 +47,7 @@ initializeGraphData(){
         id: `link${i + 1}`,  // ID unico per ogni link
         source: `node${i + 1}`,  // ID del nodo di partenza
         target: `node${i + 2}`,  // ID del nodo di arrivo (collega il nodo i al nodo i+1)
-        label: 'vai a'  // Etichetta del link
+  
   })
 }
   }
