@@ -1,44 +1,68 @@
 import { Component } from '@angular/core';
+import { FormBuilder, FormGroup, FormArray, Validators } from '@angular/forms';
 import { Work } from '../../models/models';
-import { NgForm } from '@angular/forms';
 
 @Component({
   selector: 'app-side',
   templateUrl: './side.component.html',
-  styleUrl: './side.component.css'
+  styleUrls: ['./side.component.css']
 })
 export class SideComponent {
   counterWorks = 0;
   isModalOpen = false; // Stato del modale
-  workForm?: NgForm;
 
   // Lavori esistenti
   works: Work[] = [];
 
-  // Oggetto temporaneo per raccogliere i dati del modulo
-  tempWork: Work = {
-    name: '',
-    description: '',
-    nodes: ['']
-  };
+  // Form di gestione del lavoro
+  workForm: FormGroup;
+
+  constructor(private fb: FormBuilder) {
+    // Inizializza il form
+    this.workForm = this.fb.group({
+      name: ['', [Validators.required, Validators.minLength(3)]],
+      description: ['', [Validators.required, Validators.maxLength(200)]],
+      nodes: this.fb.array([this.createNode()])
+    });
+  }
+
+// Getter per il FormArray dei nodi
+get nodes(): FormArray {
+  return this.workForm.get('nodes') as FormArray;
+}
+
+// Metodo per accedere a un nodo come FormGroup
+getNodeAt(index: number): FormGroup {
+  return this.nodes.at(index) as FormGroup;
+}
+
+
+  // Metodo per creare un nodo
+  createNode(): FormGroup {
+    return this.fb.group({
+      value: ['', [Validators.required, Validators.minLength(2), Validators.maxLength(20)]]
+    });
+  }
 
   // Apri il modale
   openModal() {
     this.isModalOpen = true;
     // Resetta il form
-    this.tempWork = { name: '', description: '', nodes: [''] };
+    this.workForm.reset();
+    this.nodes.clear();
+    this.nodes.push(this.createNode());
   }
 
   // Chiudi il modale
   closeModal() {
     this.isModalOpen = false;
-    this.workForm!.resetForm();
+    this.workForm.reset();
   }
 
   // Aggiungi un nuovo nodo
   addNode() {
-    if (this.tempWork.nodes.length < 8) {
-      this.tempWork.nodes.push('');
+    if (this.nodes.length < 8) {
+      this.nodes.push(this.createNode());
     } else {
       alert('Puoi aggiungere al massimo 8 nodi.');
     }
@@ -47,7 +71,12 @@ export class SideComponent {
   // Salva il lavoro
   saveWork() {
     // Aggiungi il nuovo lavoro all'array works
-    this.works.push({ ...this.tempWork });
+    const work: Work = {
+      name: this.workForm.value.name,
+      description: this.workForm.value.description,
+      nodes: this.workForm.value.nodes.map((node: any) => node.value)
+    };
+    this.works.push(work);
 
     console.log('Lavoro salvato:', this.works);
 
@@ -55,8 +84,8 @@ export class SideComponent {
     this.closeModal();
   }
 
-  delete(i:number){
+  // Elimina un lavoro
+  delete(i: number) {
     this.works.splice(i, 1);
   }
-
 }
