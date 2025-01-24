@@ -126,6 +126,9 @@ openGraph: EventEmitter<boolean> = new EventEmitter<boolean>();
 
   delete(i: number) {
     this.works.splice(i, 1);
+if(this.works.length<1){
+    this.openGraph.emit(false);
+}
   }
 
 

@@ -111,3 +111,12 @@ width: 100%;
     right: 8px; 
     font-size: 1.3em; 
 }
+
+.workflow {
+    text-align: center;
+    font-size: 1.2rem; /* Imposta una dimensione del font maggiore */
+    margin: 0 auto;
+    color: #000000;
+    font-family:Cambria, Cochin, Georgia, Times, 'Times New Roman', serif
+  }
+  
