@@ -10,7 +10,7 @@ import { Work } from '../../models/models';
 export class SideComponent {
   counterWorks = 0;
   isModalOpen = false; // Stato del modale
-  isModalOpenEdit = false
+  isModalOpenEdit = false;
 
   // Lavori esistenti
   works: Work[] = [];
@@ -27,16 +27,15 @@ export class SideComponent {
     });
   }
 
-// Getter per il FormArray dei nodi
-get nodes(): FormArray {
-  return this.workForm.get('nodes') as FormArray;
-}
+  // Getter per il FormArray dei nodi
+  get nodes(): FormArray {
+    return this.workForm.get('nodes') as FormArray;
+  }
 
-// Metodo per accedere a un nodo come FormGroup
-getNodeAt(index: number): FormGroup {
-  return this.nodes.at(index) as FormGroup;
-}
-
+  // Metodo per accedere a un nodo come FormGroup
+  getNodeAt(index: number): FormGroup {
+    return this.nodes.at(index) as FormGroup;
+  }
 
   // Metodo per creare un nodo
   createNode(): FormGroup {
@@ -45,51 +44,41 @@ getNodeAt(index: number): FormGroup {
     });
   }
 
-  // Apri il modale
+  // Apri il modale per creare un nuovo lavoro
   openModal() {
     this.isModalOpen = true;
-    // Resetta il form
     this.workForm.reset();
     this.nodes.clear();
     this.nodes.push(this.createNode());
   }
 
-  openModalEdit(index:number) {
-    // Resetta il form
-    console.log(this.works[index]);
-
-    const workToEdit={
-    name:this.works[index].name,
-    description:this.works[index].description,
-    nodes:[...this.works[index].nodes] 
-    }
+  // Apri il modale per modificare un lavoro
+  openModalEdit(index: number) {
     this.isModalOpenEdit = true;
 
-
-    // Patchhiamo nome e descrizione perche i nodi non funzionano
+    const workToEdit = this.works[index];
     this.workForm.patchValue({
-      name:workToEdit.name,
-      description: workToEdit.description,
-    })
+      name: workToEdit.name,
+      description: workToEdit.description
+    });
 
-    const arrayNodi= this.workForm.get('nodes') as FormArray;
-
+    // Pulisci il FormArray e aggiungi i nodi del lavoro da modificare
+    const arrayNodi = this.workForm.get('nodes') as FormArray;
     arrayNodi.clear();
-   
-    workToEdit.nodes.forEach(node =>{
-      arrayNodi.push(this.fb.control(node, [Validators.required, Validators.minLength(2)]));
-
-    })
-
-
+    workToEdit.nodes.forEach(node => {
+      arrayNodi.push(this.fb.group({
+        value: [node, [Validators.required, Validators.minLength(2), Validators.maxLength(20)]]
+      }));
+    });
   }
 
-  // Chiudi il modale
+  // Chiudi il modale per creare un nuovo lavoro
   closeModal() {
     this.isModalOpen = false;
     this.workForm.reset();
   }
 
+  // Chiudi il modale per modificare un lavoro
   closeModalEdit() {
     this.isModalOpenEdit = false;
     this.workForm.reset();
@@ -106,14 +95,12 @@ getNodeAt(index: number): FormGroup {
 
   // Salva il lavoro
   saveWork() {
-    // Aggiungi il nuovo lavoro all'array works
     const work: Work = {
       name: this.workForm.value.name,
       description: this.workForm.value.description,
       nodes: this.workForm.value.nodes.map((node: any) => node.value)
     };
     this.works.push(work);
-
     console.log('Lavoro salvato:', this.works);
 
     // Chiudi il modale
