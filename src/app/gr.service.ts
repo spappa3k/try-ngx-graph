@@ -11,6 +11,6 @@ $workToShow?:Work
 
 
   constructor() { }
-workToShow=this.workSubject.asObservable(); // Rende il soggetto un Observable
+workToShow=this.workSubject.asObservable();
 
 }

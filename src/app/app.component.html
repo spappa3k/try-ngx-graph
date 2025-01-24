@@ -2,13 +2,14 @@
   <h1 class="header-title">Salvatore Pappalardo</h1>
 </header>
 
-<section style="display: flex; flex-direction: row; width: 100%; height: 100vh;">
-  <div style="border-right: 2px solid black; width: 400px; flex-shrink: 0;">
+<section style="display: flex; flex-direction: row; width: 100%; height: 100vh; overflow-y: auto">
+  <!-- Sidebar: Aggiungi overflow-y per lo scroll solo nella sidebar -->
+  <div style="border-right: 2px solid black; width: 400px; flex-shrink: 0; height: 100vh; overflow-y: auto;">
       <app-side (openGraph)="riceviAperturaGrafico($event)"></app-side>
-    </div>
+  </div>
   
-    <div style="flex-grow: 1; padding-left: 50px;" *ngIf="isGraphOpen">
-      <app-graphs></app-graphs>
-    </div>
-  </section>
-  
+  <!-- Contenitore del grafico (solo visibile se è aperto) -->
+  <div style="flex-grow: 1; padding-left: 50px;" *ngIf="isGraphOpen">
+    <app-graphs></app-graphs>
+  </div>
+</section>
