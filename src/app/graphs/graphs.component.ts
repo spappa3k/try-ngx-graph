@@ -40,7 +40,7 @@ initializeGraphData(){
       });
     }
 
-     // Creazione dei link (collegamenti tra i nodi)
+     // -----------------------------------copiato e adattato -------------------------------
      for (let i = 0; i < this.workReceived.nodes.length - 1; i++) {
       this.linkData.push({
         id: `link${i + 1}`,
