@@ -10,6 +10,7 @@ import { Work } from '../../models/models';
 export class SideComponent {
   counterWorks = 0;
   isModalOpen = false; // Stato del modale
+  isModalOpenEdit = false
 
   // Lavori esistenti
   works: Work[] = [];
@@ -53,9 +54,44 @@ getNodeAt(index: number): FormGroup {
     this.nodes.push(this.createNode());
   }
 
+  openModalEdit(index:number) {
+    // Resetta il form
+    console.log(this.works[index]);
+
+    const workToEdit={
+    name:this.works[index].name,
+    description:this.works[index].description,
+    nodes:[...this.works[index].nodes] 
+    }
+    this.isModalOpenEdit = true;
+
+
+    // Patchhiamo nome e descrizione perche i nodi non funzionano
+    this.workForm.patchValue({
+      name:workToEdit.name,
+      description: workToEdit.description,
+    })
+
+    const arrayNodi= this.workForm.get('nodes') as FormArray;
+
+    arrayNodi.clear();
+   
+    workToEdit.nodes.forEach(node =>{
+      arrayNodi.push(this.fb.control(node, [Validators.required, Validators.minLength(2)]));
+
+    })
+
+
+  }
+
   // Chiudi il modale
   closeModal() {
     this.isModalOpen = false;
+    this.workForm.reset();
+  }
+
+  closeModalEdit() {
+    this.isModalOpenEdit = false;
     this.workForm.reset();
   }
 
