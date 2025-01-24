@@ -58,6 +58,7 @@ openGraph: EventEmitter<boolean> = new EventEmitter<boolean>();
 
   // Apri il modale per modificare un lavoro
   openModalEdit(index: number) {
+    this.openGraph.emit(false);
     this.indexToEdit=index; // usato poi per salvare dopo
     this.isModalOpenEdit = true;
     const workToEdit = this.works[index];
@@ -98,6 +99,12 @@ openGraph: EventEmitter<boolean> = new EventEmitter<boolean>();
     }
   }
 
+  removeLastNode() {
+    if (this.nodes.length > 1) {
+      this.nodes.removeAt(this.nodes.length - 1);
+    }
+  }
+
   // Salva il lavoro
   saveWork() {
     const work: Work = {
@@ -105,7 +112,9 @@ openGraph: EventEmitter<boolean> = new EventEmitter<boolean>();
       description: this.workForm.value.description,
       nodes: this.workForm.value.nodes.map((node: any) => node.value)
     };
-    this.works.push(work);
+    this.works.push(work); 
+    this.gr.$workToShow = this.works[this.works.length - 1];
+    this.openGraph.emit(true);
     console.log('Lavoro salvato:', this.works);
 
     // Chiudi il modale
@@ -120,6 +129,8 @@ openGraph: EventEmitter<boolean> = new EventEmitter<boolean>();
         nodes: this.workForm.value.nodes.map((node: any) => node.value)
       };
       this.works[this.indexToEdit!] = work;
+      this.gr.$workToShow=work;
+      this.openGraph.emit(true);
       this.closeModal();
     }
 
@@ -129,8 +140,5 @@ openGraph: EventEmitter<boolean> = new EventEmitter<boolean>();
   }
 
 
-  sendWorkToService(index:number){
-this.gr.workToShow=this.works[index];
-this.openGraph.emit(true);
-  }
+  
 }

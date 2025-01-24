@@ -35,3 +35,45 @@ transition: background-color 0.3s ease, transform 0.2s ease;
         font-size: 0.8em;
         margin-top: 8px;
     }
+
+    .groupNodi button{
+width: 100%;
+    }
+
+    /* Header */
+.header {
+    background: linear-gradient(to right, #ffffff, #d51f1f);
+    padding: 20px;
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+    border-bottom: black solid 2px;
+  }
+  
+  .header-title {
+    font-size: 2em;
+    font-weight: bold;
+    color: #ffffff;
+    padding-right: 20px;
+  }
+  
+  .main-section {
+    display: flex;
+    flex-direction: row;
+    width: 100%;
+    height: 100vh;
+    margin-top: 20px;
+  }
+  
+
+  .sidebar {
+    border-right: 2px solid black;
+    width: 400px;
+    flex-shrink: 0;
+  }
+
+  .graph-container {
+    flex-grow: 1;
+    padding-left: 50px;
+  }
+  
