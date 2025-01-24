@@ -7,5 +7,13 @@ import { Component } from '@angular/core';
 })
 export class AppComponent {
   title = 'try-ngx-graph';
+
+  isGraphOpen: boolean = false;
+
+  // Metodo per ricevere l'evento dal figlio e aggiornare lo stato
+  riceviAperturaGrafico(apri: boolean) {
+    this.isGraphOpen = apri;
+    console.log('Apertura grafico:', this.isGraphOpen);
+  }
 }
 

@@ -1,6 +1,7 @@
-import { Component } from '@angular/core';
+import { Component, EventEmitter, Output } from '@angular/core';
 import { FormBuilder, FormGroup, FormArray, Validators } from '@angular/forms';
 import { Work } from '../../models/models';
+import { GrService } from '../gr.service';
 
 @Component({
   selector: 'app-side',
@@ -15,10 +16,13 @@ export class SideComponent {
   // Lavori esistenti
   works: Work[] = [];
 
+@Output()
+openGraph: EventEmitter<boolean> = new EventEmitter<boolean>();
+
   // Form di gestione del lavoro
   workForm: FormGroup;
 
-  constructor(private fb: FormBuilder) {
+  constructor(private fb: FormBuilder, private gr:GrService) {
     // Inizializza il form
     this.workForm = this.fb.group({
       name: ['', [Validators.required, Validators.minLength(3)]],
@@ -75,6 +79,7 @@ export class SideComponent {
   // Chiudi il modale per creare un nuovo lavoro
   closeModal() {
     this.isModalOpen = false;
+    this.isModalOpenEdit = false;
     this.workForm.reset();
   }
 
@@ -121,5 +126,11 @@ export class SideComponent {
   // Elimina un lavoro
   delete(i: number) {
     this.works.splice(i, 1);
+  }
+
+
+  sendWorkToService(index:number){
+this.gr.workToShow=this.works[index];
+this.openGraph.emit(true);
   }
 }
